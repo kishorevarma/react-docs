@@ -41,16 +41,16 @@ const client = new ApolloClient({
 
 These IDs allow Apollo Client to reactively tell all queries that fetched a particular object about updates to that part of the store.
 
-Apollo Client exports a method to make adding the `__typename` automatic: you provide this method as a transformer to the Apollo Client constructor.  So to do `dataIdFromObject` most concisely, your client initialization might look like this:
+You can make `__typename` automatic by adding addTypename property as true to the Apollo Client constructor. So to do `dataIdFromObject` most concisely, your client initialization might look like this:
 
 ```
-import ApolloClient, {createNetworkInterface, addTypename} from 'apollo-client'
+import ApolloClient, {createNetworkInterface} from 'apollo-client'
 
 const networkInterface = createNetworkInterface('http://localhost:3000/graphql') // TBD: Need to provide the right path for production
 
 const apolloClient = new ApolloClient({
     networkInterface: networkInterface,
-    queryTransformer: addTypename,
+    addTypename: true,
     dataIdFromObject: (result) => {
         if (result.id && result.__typename) {
             return result.__typename + result.id
